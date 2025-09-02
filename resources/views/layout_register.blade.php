@@ -67,9 +67,9 @@
                                         <select name="country" class="form-select border-dark form-select-sm" id="country"
                                             required="">
                                             <option selected disabled>Selected</option>
-                                            {{-- @foreach ($countries as $country) --}}
-                                                {{-- <option value="{{ $country->id }}">{{ $country->name }}</option> --}}
-                                            {{-- @endforeach --}}
+                                            @foreach ($countries as $country)
+                                                <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
