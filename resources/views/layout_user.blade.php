@@ -13,6 +13,9 @@
     <link href="{{ asset('css/bootstrap-icons.css') }}" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
+    <!-- Font Awesome CDN-->
+    <script src="{{ asset('js/font-awesome.js') }}"></script>
+
 </head>
 
 <body>
@@ -22,7 +25,7 @@
     <!-- Bootstrap core JS-->
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
+    <script src="{{ asset('js/scripts.js') }}"></script>
 </body>
 
 </html>
