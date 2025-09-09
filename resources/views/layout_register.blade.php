@@ -7,9 +7,18 @@
                 <div>
                     <h1 class="text-start m-3 mt-3">Registration</h1>
                 </div>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <hr class="border-dark mx-5">
 
-                <form action="#" method="post" enctype="multipart/form-data">
+                <form action="{{ route('storeUser') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="container col-10">
                         <form>
@@ -41,7 +50,7 @@
                             <div class="mb-2 row">
                                 <div class="col-6">
                                     <label for="contact" class="col-4 col-form-label">Contact Number</label>
-                                    <input type="text" class="form-control border-dark col-4" name="contact"
+                                    <input type="tel" class="form-control border-dark col-4" name="contact"
                                         id="contact" placeholder="" maxlength="10" pattern="[0-9]+" required="" />
                                 </div>
                                 <div class="col-6">
@@ -51,7 +60,7 @@
                                             id="male" value="Male" required="" />
                                         <label class="form-check-label" for="male"> Male </label>
                                         <input class="form-check-input border-dark " type="radio" name="gender"
-                                            id="female" value="female" required="" />
+                                            id="female" value="Female" required="" />
                                         <label class="form-check-label" for="female">Female</label>
                                     </div>
                                 </div>

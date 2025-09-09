@@ -2,15 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\enum\roles;
 use App\Models\country;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 
 class AuthenticationController extends Controller
 {
     public function register(Request $request)
     {
         $countries = country::all();
-        return view('layout_register',compact('countries'));
+        return view('layout_register', compact('countries'));
+    }
+    public function storeUser(Request $request)
+    {
+        $request->validate([
+            'firstName' => 'required|min:5|max:20|string',
+            'lastName' => 'required|min:4|max:10|string|different:firstName',
+            'email' => 'required|email|unique:User,email',
+            'password' => 'required|min:6',
+            'contact' => 'numeric|nullable',
+            'gender' => 'required|in:Male,Female',
+            'address' => 'nullable|string|max:100',
+            'country' => 'required|exists:countries,id',
+            'profile' => 'required|mimes:jpg,jpeg,png'
+        ]);
+        $requestData = $request->except(['_token', 'regist']);
+        $imgName = $request->firstName . '_' . rand(1111, 9999) . '.' . $request->profile->extension();
+        $request->profile->move(public_path('profiles/'), $imgName);
+        $requestData['profile'] = $imgName;
+        $requestData['role_id'] = roles::admin;
+        // echo "<pre>";
+        // print_r($requestData);
+        // exit;
+        $user = User::create($requestData);
+        $user->save();
+        return redirect()->route('home');
     }
     public function login(Request $request)
     {
