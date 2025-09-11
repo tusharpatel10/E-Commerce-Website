@@ -2,9 +2,19 @@
 @section('content')
     <div class="container my-5" style="width: 40%;">
         <div class="border mt-5 border-dark">
-            <form method="post">
-                <h1 class="text-center mt-5">Login</h1>
-                <hr class="border-dark mx-5">
+            <h1 class="text-center mt-5">Login</h1>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <hr class="border-dark mx-5">
+            <form method="post" action="{{ route('authenticate') }}">
+                @csrf
                 <div class="mb-3 mx-5">
                     <label for="login" class="form-label">Email</label>
                     <input type="email" name="email" id="" class="form-control border-dark"

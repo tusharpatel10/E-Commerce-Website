@@ -8,6 +8,8 @@ use App\Models\country;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AuthenticationController extends Controller
 {
@@ -33,6 +35,7 @@ class AuthenticationController extends Controller
         $imgName = $request->firstName . '_' . rand(1111, 9999) . '.' . $request->profile->extension();
         $request->profile->move(public_path('profiles/'), $imgName);
         $requestData['profile'] = $imgName;
+        $requestData['password'] = hash::make($request->password);
         $requestData['role_id'] = roles::admin;
         // echo "<pre>";
         // print_r($requestData);
@@ -45,6 +48,23 @@ class AuthenticationController extends Controller
     public function login(Request $request)
     {
         return view('layout_login');
+    }
+    public function authenticate(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required'
+        ]);
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials)) {
+            // $user = Auth()->User();
+            // echo "<pre>";
+            // print_r($user);
+            // exit;
+            return redirect()->intended('/')->withSuccess('Login Successfull');
+        } else {
+            return redirect()->intended('login')->withSuccess('Please try again');
+        }
     }
     public function forgotPassword(Request $request)
     {

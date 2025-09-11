@@ -19,15 +19,29 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
-                    My Account
+                    @guest
+                        My Account
+                    @else
+                        {{ auth()->user()->firstName ?? 'My Account' }}
+                    @endguest
                 </a>
-                <ul class="dropdown-menu bg-success">
-                    <li><a class="dropdown-item" href="{{ route('login') }}">Login</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="{{ route('register') }}">Register</a></li>
-                </ul>
+                @guest
+                    <ul class="dropdown-menu bg-success">
+                        <li><a class="dropdown-item" href="{{ route('login') }}">Login</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="{{ route('register') }}">Register</a></li>
+                    </ul>
+                @else
+                    <ul class="dropdown-menu bg-success">
+                        <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                    </ul>
+                @endguest
             </li>
         </ul>
     </div>
