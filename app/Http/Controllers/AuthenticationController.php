@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\enum\roles;
+use App\Events\WelcomeMail;
 use App\Models\country;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class AuthenticationController extends Controller
     public function storeUser(Request $request)
     {
         $request->validate([
-            'firstName' => 'required|min:5|max:20|string',
+            'firstName' => 'required|min:4|max:20|string',
             'lastName' => 'required|min:4|max:10|string|different:firstName',
             'email' => 'required|email|unique:User,email',
             'password' => 'required|min:6',
@@ -38,6 +39,7 @@ class AuthenticationController extends Controller
         // exit;
         $user = User::create($requestData);
         $user->save();
+        WelcomeMail::dispatch($user);
         return redirect()->route('home');
     }
     public function login(Request $request)
