@@ -15,6 +15,7 @@ Route::controller(AuthenticationController::class)->group(function () {
     Route::get('/login', 'login')->name('login');
     Route::post('/login', 'authenticate')->name('authenticate');
     Route::get('/forgotPassword', 'forgotPassword')->name('forgotPassword');
+    Route::get('/logout', 'logout')->name('logout');
 });
 
 

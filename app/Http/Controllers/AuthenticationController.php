@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AuthenticationController extends Controller
 {
@@ -69,5 +70,11 @@ class AuthenticationController extends Controller
     public function forgotPassword(Request $request)
     {
         return view('forgot_password');
+    }
+    public function logout(Request $request)
+    {
+        Session::flush();
+        Auth::logout();
+        return redirect('login');
     }
 }
