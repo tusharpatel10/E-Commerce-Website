@@ -3,6 +3,16 @@
     <!-- Section-->
     <div class="container h-100 mb-5">
         <div class="container-xl px-4 mt-4">
+            @include('flash_data')
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="row">
                 <div class="col-xl-4">
                     {{-- Profile Picture Card --}}
@@ -30,49 +40,47 @@
                             <h5>Account Details</h5>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('storeUser') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('userProfileUpdate') }}" method="post" enctype="multipart/form-data">
                                 @csrf
+                                @method('put')
                                 <div class="container">
                                     <div class="mb-3 row">
                                         <div class="col-6">
                                             <label for="firstName" class="form-label">First Name</label>
                                             <input type="text" class="form-control border-dark col-4" name="firstName"
-                                                id="firstName" placeholder="" required="" />
+                                                id="firstName" value="{{ $user->firstName }}" required="" />
                                         </div>
                                         <div class="col-6">
                                             <label for="lastName" class="form-label">Last Name</label>
                                             <input type="text" class="form-control border-dark col-4" name="lastName"
-                                                id="lastName" placeholder="" required="" />
+                                                id="lastName" value="{{ $user->lastName }}" required="" />
                                         </div>
                                     </div>
                                     <div class="mb-2 row">
                                         <div class="col-6">
                                             <label for="email" class="form-label">Email</label>
                                             <input type="text" class="form-control border-dark col-4" name="email"
-                                                id="email" placeholder="" required="" />
+                                                id="email" value="{{ $user->email }}" required="" />
                                         </div>
 
                                         <div class="col-6">
-                                            <label for="password" class=" form-label">Password</label>
-                                            <input type="text" class="form-control border-dark col-4" name="password"
-                                                id="password" placeholder="" required="" />
-                                        </div>
-                                    </div>
-                                    <div class="mb-2 row">
-                                        <div class="col-6">
                                             <label for="contact" class="form-label">Contact Number</label>
                                             <input type="tel" class="form-control border-dark col-4" name="contact"
-                                                id="contact" placeholder="" maxlength="10" pattern="[0-9]+"
+                                                id="contact" value="{{ $user->contact }}" maxlength="10" pattern="[0-9]+"
                                                 required="" />
                                         </div>
                                         <div class="col-6">
                                             <label for="gender" class="form-label">Gender</label>
                                             <div class="check">
                                                 <input class="form-check-input border-dark " type="radio" name="gender"
-                                                    id="male" value="Male" required="" />
+                                                    id="male" value="Male"
+                                                    @if ($user->gender == 'Male') {{ 'checked' }} @endif
+                                                    required="" />
                                                 <label class="form-check-label" for="male"> Male </label>
                                                 <input class="form-check-input border-dark " type="radio" name="gender"
-                                                    id="female" value="Female" required="" />
+                                                    id="female" value="Female"
+                                                    @if ($user->gender == 'Female') {{ 'checked' }} @endif
+                                                    required="" />
                                                 <label class="form-check-label" for="female">Female</label>
                                             </div>
                                         </div>
@@ -80,7 +88,7 @@
                                     <div class="mb-2 row">
                                         <div class="col-6">
                                             <label for="address" class="form-label">Address</label>
-                                            <textarea class="form-control border-dark" name="address" id="address" required=""></textarea>
+                                            <textarea class="form-control border-dark" name="address" id="address" required="">{{ $user->address }}</textarea>
                                         </div>
                                         <div class="col-6">
                                             <div class="mb-3">
@@ -89,7 +97,9 @@
                                                     id="country" required="">
                                                     <option selected disabled>Selected</option>
                                                     @foreach ($countries as $country)
-                                                        <option value="{{ $country->id }}">{{ $country->name }}
+                                                        <option value="{{ $country->id }}"
+                                                            @if ($user->country == $country->id) {{ 'selected' }} @endif>
+                                                            {{ $country->name }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -98,18 +108,9 @@
                                     </div>
                                     <div class="mb-2 row">
                                         <div class="col-6">
-                                            <div class="mb-3">
-                                                <label for="profile" class="form-label">Profile</label>
-                                                <input type="file" class="form-control border-dark" name="profile"
-                                                    id="" aria-describedby="helpId" placeholder="" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 row">
-                                        <div class="col-6">
-                                            <button name="regist" id="regist" type="submit" value="regist"
-                                                class="btn btn-dark form-group">
-                                                Registration
+                                            <button name="update" id="update" type="submit" value="update profile"
+                                                class="btn btn-dark form-group px-3 mt-3">
+                                                Updation Profile
                                             </button>
                                         </div>
                                     </div>

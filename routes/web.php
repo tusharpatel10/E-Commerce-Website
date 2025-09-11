@@ -21,4 +21,5 @@ Route::controller(AuthenticationController::class)->group(function () {
 
 Route::controller(UserController::class)->group(function () {
     Route::get('profile', 'profile')->name('profile');
+    Route::put('userProfileUpdate', 'userProfileUpdate')->name('userProfileUpdate');
 });
