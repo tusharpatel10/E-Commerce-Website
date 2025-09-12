@@ -22,14 +22,21 @@
                                 <h5>Profile Picture</h5>
                             </div>
                             <div class="card-body">
-
                                 {{-- Profile Picture Image --}}
-                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="#img"
-                                    class="img-account-profile rounded-circle mb-2">
+                                <img src="{{ asset('profiles') . '/' . $user->profile }}" alt="#img"
+                                    class="img-account-profile rounded-circle mb-2" style="width:80%;margin:0px 40px 0px;">
                                 {{-- Profile picture help block --}}
                                 <div class="small font-italic text-muted mb-4">JPG or PNG no Larger than 5 MB</div>
-                                {{-- Profile picture upload button --}}
-                                <button class="btn btn-outline-primary" type="button">Upload New Image</button>
+                                <form action="{{ route('UserImageUpdate') }}" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                    @method('post')
+                                    <input type="file" class="form-control border-dark col-4" name="profile"
+                                        id="contact" value="{{ $user->profile }}" required />
+                                    <button name="update" id="update" type="submit" value="update profile image"
+                                        class="btn btn-dark form-group px-3 mt-3">
+                                        Updation Profile Image
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
