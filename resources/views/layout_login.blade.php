@@ -3,6 +3,7 @@
     <div class="container my-5" style="width: 40%;">
         <div class="border mt-5 border-dark">
             <h1 class="text-center mt-5">Login</h1>
+            @include('flash_data')
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -22,7 +23,7 @@
                 </div>
                 <div class="mb-3 mx-5">
                     <label for="login" class="form-label">Password</label>
-                    <input type="text" name="password" id="" class="form-control border-dark"
+                    <input type="password" name="password" id="" class="form-control border-dark"
                         placeholder="Enter the Password" aria-describedby="helpId" required />
                 </div>
                 <button class="btn btn-dark mb-3 mx-5" type="login" name="login">login</button>

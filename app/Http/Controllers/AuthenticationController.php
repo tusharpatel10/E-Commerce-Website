@@ -4,13 +4,18 @@ namespace App\Http\Controllers;
 
 use App\enum\roles;
 use App\Events\WelcomeMail;
+use App\Mail\SendForgotPasswordEmail;
 use App\Models\country;
+use App\Models\PasswordReset;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class AuthenticationController extends Controller
 {
@@ -70,6 +75,43 @@ class AuthenticationController extends Controller
     public function forgotPassword(Request $request)
     {
         return view('forgot_password');
+    }
+    public function sendForgotPasswordEmail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:user,email'
+        ]);
+
+        $requestData = $request->except('_token', 'forgot_pass_btn');
+        $requestData['_token'] = Str::random('30');
+
+        $forgotPasswordData = DB::table('password_resets')->insert($requestData);
+        $ready = Mail::to($requestData['email'])->send(new SendForgotPasswordEmail($requestData));
+        // echo "<pre>";
+        // print_r($request->all());
+        // exit;
+
+        return redirect()->route('forgotPassword')->with('success', "Your reset Password Mail was Sending Successfully.");
+    }
+
+    public function resetPassword(Request $request, $token)
+    {
+        $checkData = DB::table('password_resets')->where('email', $request->email)->where('_token', $token)->count();
+        if ($checkData > 0) {
+            $email = $request->email;
+            return view('reset_password', compact('email'));
+        } else {
+            return redirect()->route('forgotPassword')->with('danger', 'Invalid Token');
+        }
+    }
+    public function resetPasswordData(Request $request)
+    {
+        $request->validate([
+            "password" => 'required|min:6',
+            "confirm_password" => 'required|same:password'
+        ]);
+        User::where('email', $request->email)->Update(['password' => bcrypt($request->password)]);
+        return redirect()->route('login')->with('success', 'Your Password has been Reset Successfully, You have been login.');
     }
     public function logout(Request $request)
     {

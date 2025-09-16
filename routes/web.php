@@ -15,6 +15,9 @@ Route::controller(AuthenticationController::class)->group(function () {
     Route::get('/login', 'login')->name('login');
     Route::post('/login', 'authenticate')->name('authenticate');
     Route::get('/forgotPassword', 'forgotPassword')->name('forgotPassword');
+    Route::post('/forgotPassword', 'sendForgotPasswordEmail')->name('sendForgotPasswordEmail');
+    Route::get('/resetPassword/{token}', 'resetPassword')->name('resetPassword');
+    Route::post('/resetPassword', 'resetPasswordData')->name('reset_password_data');
     Route::get('/logout', 'logout')->name('logout');
 });
 

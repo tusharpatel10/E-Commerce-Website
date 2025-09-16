@@ -4,8 +4,8 @@
         <div class="album py-5" style="...">
             <div class="row h-100 justify-content-center align-items-center">
                 <div class="card border-dark" style="...">
-                    <div class="d-flex justify-content-between mt-3">
-                        <h2>Forgot Password</h2>
+                    <div>
+                        <h2>Reset Password</h2>
                         <a href="{{ route('login') }}" class="float-end btn btn-outline-dark" style="...">Login</a>
                     </div>
                     @include('flash_data')
@@ -18,18 +18,26 @@
                             </ul>
                         </div>
                     @endif
-                    <p>Please Enter your email for Reset your Password.</p>
                     <hr>
                     <div class="card-body">
-                        <form action="{{ route('sendForgotPasswordEmail') }}" method="post" name="forgotPassword"
+                        <form action="{{ route('reset_password_data') }}" method="post" name="resetPasswordData"
                             enctype="multipart/form-data">
                             @csrf
-                            <div class="form-group">
-                                <input type="email" class="form-control" name="email" id="email" required="required"
-                                    placeholder="Enter Email">
+                            <div class="row mb-4">
+                                <div class="form-group">
+                                    <input type="hidden" value="{{ $email }}" name="email">
+                                    <input type="password" class="form-control" name="password" id="password"
+                                        required="required" placeholder="Enter password">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <input type="password" class="form-control" name="confirm_password"
+                                        id="confirm_password" required="required" placeholder="Enter confirm password">
+                                </div>
                             </div>
                             <br>
-                            <input type="submit" name="forgot_pass_btn" class="btn btn-outline-dark" value="Send">
+                            <input type="submit" name="reset_pass_btn" class="btn btn-outline-dark" value="Reset Password">
                         </form>
                     </div>
                 </div>
