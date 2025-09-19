@@ -19,6 +19,10 @@ use Illuminate\Support\Str;
 
 class AuthenticationController extends Controller
 {
+    public function index()
+    {
+        return view('index');
+    }
     public function register(Request $request)
     {
         $countries = country::all();
@@ -63,13 +67,17 @@ class AuthenticationController extends Controller
         ]);
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
+            if (auth()->user()->role_id == roles::admin) {
+                return redirect()->route('admin_home')->withSuccess('Hello Admin, you are Login Successfull');
+            } else {
+                return redirect()->route('home')->withSuccess('Hello User, you are Login Successfull');
+            }
             // $user = Auth()->User();
             // echo "<pre>";
             // print_r($user);
             // exit;
-            return redirect()->intended('/')->withSuccess('Login Successfull');
         } else {
-            return redirect()->intended('login')->withSuccess('Please try again');
+            return redirect()->route('login')->withSuccess('Please try again');
         }
     }
     public function forgotPassword(Request $request)

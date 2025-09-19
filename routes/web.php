@@ -1,15 +1,17 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('index');
-})->name('home');
+// Route::get('/', function () {
+//     return view('index');
+// })->name('home');
 
 
 Route::controller(AuthenticationController::class)->group(function () {
+    Route::get('/home', 'index')->name('home');
     Route::get('/register', 'register')->name('register');
     Route::post('/storeUser', 'storeUser')->name('storeUser');
     Route::get('/login', 'login')->name('login');
@@ -26,4 +28,10 @@ Route::controller(UserController::class)->group(function () {
     Route::get('profile', 'profile')->name('profile');
     Route::put('userProfileUpdate', 'userProfileUpdate')->name('userProfileUpdate');
     Route::post('User-Image-Update', 'UserImageUpdate')->name('UserImageUpdate');
+});
+
+Route::group(['prefix' => '/admin', 'middleware' => ['CheckRoles']], function () {
+    Route::controller(AdminController::class)->group(function () {
+        Route::get('/', 'index')->name('admin_home');
+    });
 });
