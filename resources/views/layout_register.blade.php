@@ -3,10 +3,11 @@
     <main>
         <div class="container col-8 mb-5">
             <div class="border mt-5 border-dark">
-                <a href="#" class="display-flex float-end btn btn-outline-dark mt-3 me-5">Login</a>
+                <a href="{{ route('login') }}" class="display-flex float-end btn btn-outline-dark mt-3 me-5">Login</a>
                 <div>
                     <h1 class="text-start m-3 mt-3">Registration</h1>
                 </div>
+                @include('flash_data')
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>

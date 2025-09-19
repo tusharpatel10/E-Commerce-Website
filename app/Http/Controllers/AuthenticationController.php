@@ -53,7 +53,7 @@ class AuthenticationController extends Controller
         $user = User::create($requestData);
         $user->save();
         WelcomeMail::dispatch($user);
-        return redirect()->route('home');
+        return redirect()->route('home', [], 301)->with('success', 'Registration Account was Successfully');
     }
     public function login(Request $request)
     {
@@ -68,16 +68,16 @@ class AuthenticationController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             if (auth()->user()->role_id == roles::admin) {
-                return redirect()->route('admin_home')->withSuccess('Hello Admin, you are Login Successfull');
+                return redirect()->route('admin_home', [], 301)->withSuccess('Hello Admin, you are Login Successfull');
             } else {
-                return redirect()->route('home')->withSuccess('Hello User, you are Login Successfull');
+                return redirect()->route('home', [], 301)->withSuccess('Hello User, you are Login Successfull');
             }
             // $user = Auth()->User();
             // echo "<pre>";
             // print_r($user);
             // exit;
         } else {
-            return redirect()->route('login')->withSuccess('Please try again');
+            return redirect()->route('login', [], 301)->withSuccess('Please try again');
         }
     }
     public function forgotPassword(Request $request)
@@ -99,7 +99,7 @@ class AuthenticationController extends Controller
         // print_r($request->all());
         // exit;
 
-        return redirect()->route('forgotPassword')->with('success', "Your reset Password Mail was Sending Successfully.");
+        return redirect()->route('forgotPassword', [], 301)->with('success', "Your reset Password Mail was Sending Successfully.");
     }
 
     public function resetPassword(Request $request, $token)
@@ -109,7 +109,7 @@ class AuthenticationController extends Controller
             $email = $request->email;
             return view('reset_password', compact('email'));
         } else {
-            return redirect()->route('forgotPassword')->with('danger', 'Invalid Token');
+            return redirect()->route('forgotPassword', [], 301)->with('danger', 'Invalid Token');
         }
     }
     public function resetPasswordData(Request $request)
@@ -119,7 +119,7 @@ class AuthenticationController extends Controller
             "confirm_password" => 'required|same:password'
         ]);
         User::where('email', $request->email)->Update(['password' => bcrypt($request->password)]);
-        return redirect()->route('login')->with('success', 'Your Password has been Reset Successfully, You have been login.');
+        return redirect()->route('login', [], 301)->with('success', 'Your Password has been Reset Successfully, You have been login.');
     }
     public function logout(Request $request)
     {

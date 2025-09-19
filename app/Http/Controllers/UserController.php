@@ -12,7 +12,7 @@ class UserController extends Controller
     {
         $user = auth()->user();
         $countries = country::all();
-        return view('user_profile', compact('user', 'countries'));
+        return view('user_profile', compact('user', 'countries'), [], 301);
     }
 
     public function userProfileUpdate(Request $request)
@@ -32,7 +32,7 @@ class UserController extends Controller
         // echo "<pre>";
         // print_r($request->all());
         // exit;
-        return redirect()->route('profile')->with('success', 'Your Profile has been update Successfully');
+        return redirect()->route('profile', [], 301)->with('success', 'Your Profile has been update Successfully');
     }
 
     public function UserImageUpdate(Request $request)
@@ -48,14 +48,12 @@ class UserController extends Controller
         $profileExists = public_path("profiles/$existingProfile");
         if (file_exists($profileExists)) {
             unlink("profiles/$existingProfile");
-        }else {
-
+        } else {
         }
         // echo "<pre>";
         // print_r($request->all());
         // exit;
         $user->update($requestData);
-        return redirect()->route('profile')->with('success', 'Your Profile Image has been Update Successfully');
-
+        return redirect()->route('profile', [], 301)->with('success', 'Your Profile Image has been Update Successfully');
     }
 }

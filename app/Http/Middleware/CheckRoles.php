@@ -17,7 +17,6 @@ class CheckRoles
     public function handle(Request $request, Closure $next): Response
     {
         if (auth()->user()->role_id !== roles::admin) {
-            echo "Admin site";
             return redirect()->route('home', [], 301);
         }
         return $next($request);
