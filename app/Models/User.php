@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\enum\roles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -54,7 +55,21 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'role_id'=>roles::class
+            'role_id' => roles::class
         ];
+    }
+
+    protected function getFullNameAttribute()
+    {
+        return ucfirst($this->firstName) . " " . ucfirst($this->lastName);
+    }
+    protected function getRoleNameAttribute()
+    {
+        return ucfirst($this->role_id->name);
+    }
+
+    public function countryData()
+    {
+        return $this->hasOne(country::class, 'id');
     }
 }

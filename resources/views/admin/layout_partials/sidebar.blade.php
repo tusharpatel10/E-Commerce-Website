@@ -10,7 +10,7 @@
                     <div class="sb-nav-link-icon"><i class="fa fa-user-circle" aria-hidden="true"></i></div>
                     Admins
                 </a>
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{ route('userList') }}">
                     <div class="sb-nav-link-icon"><i class="fa fa-users" aria-hidden="true"></i></div>
                     Users
                 </a>

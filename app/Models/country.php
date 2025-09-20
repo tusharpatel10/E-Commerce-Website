@@ -11,5 +11,5 @@ class country extends Model
 
     protected $table = 'countries';
     protected $primaryKey = 'id';
-
+    protected $fillable = ['name'];
 }
