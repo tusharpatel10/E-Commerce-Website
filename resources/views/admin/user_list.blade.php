@@ -12,6 +12,7 @@
                     <i class="fas fa-table me-1"></i>
                     <a href="" class="btn btn-outline-primary sm float-end"> + Add User</a>
                 </div>
+                @include('flash_data')
                 <div class="card-body">
                     <div class="table-responsive justify-center">
                         <table class="table table-primary text-start" id="datatablesSimple">
@@ -40,7 +41,8 @@
                                         <td>{{ $user->address }}</td>
                                         <td>{{ $user->countryData->name }}</td>
                                         <td>
-                                            <a href="#" class="btn btn-sm btn-primary">Edit</a>
+                                            <a href="{{ route('admin-user-edit', ['id' => $user->id]) }}"
+                                                class="btn btn-sm btn-primary">Edit</a>
                                             <a href="#" class="btn btn-sm btn-danger">Deactivate</a>
                                         </td>
                                     </tr>

@@ -34,5 +34,6 @@ Route::group(['prefix' => '/admin', 'middleware' => ['CheckRoles']], function ()
     Route::controller(AdminController::class)->group(function () {
         Route::get('/', 'index')->name('admin_home');
         Route::get('user-list', 'userList')->name('userList');
+        Route::get('user-edit/{id}/', 'editUser')->name('admin-user-edit');
     });
 });
