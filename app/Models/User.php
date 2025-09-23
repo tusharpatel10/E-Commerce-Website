@@ -70,6 +70,6 @@ class User extends Authenticatable
 
     public function countryData()
     {
-        return $this->hasOne(country::class, 'id');
+        return $this->hasOne(country::class, 'id','country');
     }
 }

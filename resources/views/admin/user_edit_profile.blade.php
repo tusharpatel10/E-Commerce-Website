@@ -35,13 +35,13 @@
                                         style="width:80%;margin:0px 40px 0px;">
                                     {{-- Profile picture help block --}}
                                     <div class="small font-italic text-muted mb-4">JPG or PNG no Larger than 5 MB</div>
-                                    <form action="{{ route('UserImageUpdate') }}" method="post"
+                                    <form action="{{ route('admin-user-profile-update', ['id' => $user->id]) }}" method="post"
                                         enctype="multipart/form-data">
                                         @csrf
                                         @method('post')
                                         <input type="file" class="form-control border-dark col-4" name="profile"
                                             id="contact" value="{{ $user->profile }}" required />
-                                        <button name="update" id="update" type="submit" value="update profile image"
+                                        <button name="updateProfile" id="update" type="submit" value="updateProfileImage"
                                             class="btn btn-dark form-group px-3 mt-3">
                                             Updation Profile Image
                                         </button>
@@ -56,7 +56,7 @@
                                 <h5>Account Details</h5>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('userProfileUpdate') }}" method="post"
+                                <form action="{{ route('admin-user-update', ['id' => $user->id]) }}" method="post"
                                     enctype="multipart/form-data">
                                     @csrf
                                     @method('put')

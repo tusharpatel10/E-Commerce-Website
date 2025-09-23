@@ -16,10 +16,11 @@ class AdminController extends Controller
     public function userList(Request $request)
     {
         $users = User::all();
+        $countries = country::all();
         // echo "<pre>";
         // print_r($users[1]->countryData);
         // exit;
-        return view('admin.user_list', compact('users'));
+        return view('admin.user_list', compact('users', 'countries'), [], 301);
     }
     public function editUser(Request $request, $id)
     {
@@ -33,5 +34,55 @@ class AdminController extends Controller
         // print_r($role_id);
         // exit;
         return view('admin.user_edit_profile', compact('user', 'role_id', 'countries'));
+    }
+
+    public function updateUser(Request $request, $id)
+    {
+
+        // echo "<pre>";
+        // print_r($request->all());
+        // exit;
+        $requestData = $request->except('token', 'method', 'update');
+        $request->validate([
+            'firstName' => 'required|min:4|max:20|string',
+            'lastName' => 'required|min:4|max:10|string|different:firstName',
+            'email' => 'required|email',
+            'contact' => 'numeric|nullable',
+            'gender' => 'required|in:Male,Female',
+            'role_id' => 'required|in:0,1',
+            'address' => 'nullable|string|max:100',
+            'country' => 'required|exists:countries,id',
+        ]);
+        $user = User::find($id);
+        if (!empty($user)) {
+            $user->update($requestData);
+            return redirect()->route('userList', [], 301)->with('success', 'Users Profile has been updated Successfully.');
+        } else {
+            return redirect()->route('userList', [], 301)->with('danger', 'Something went.');
+        }
+    }
+
+    public function updateUserProfile(Request $request, $id)
+    {
+        $request->validate([
+            'profile' => 'required|mimes:png,jpg,jpeg'
+        ]);
+        $requestData = $request->except(['_token', '_method', 'updateProfile']);
+        $user = User::find($id);
+        $imgName = $user->firstName . '_' . rand(1111, 9999) . '.' . $request->profile->extension();
+        $request->profile->move(public_path('profiles/'), $imgName);
+        $requestData['profile'] = $imgName;
+        if (!empty($user)) {
+            $existingProfile = $user->profile;
+            $user->update($requestData);
+            $profileExists = public_path("profiles/$existingProfile");
+            if (file_exists($profileExists)) {
+                unlink("profiles/$existingProfile");
+                return redirect()->route('userList')->with('success', 'Users Profile Picture has been update Successfully.');
+            }
+            return redirect()->route('userList')->with('success', 'Users has been New Profile Picture update Successfully.');
+        } else {
+            return redirect()->route('userList')->with('danger', 'Something went.');
+        }
     }
 }
