@@ -5,12 +5,11 @@
             <h1 class="mt-4">Users</h1>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item" active>User</li>
             </ol>
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-table me-1"></i>
-                    <a href="" class="btn btn-outline-primary sm float-end"> + Add User</a>
+                    <a href="{{ route('admin-user-profile-register') }}" class="btn btn-outline-primary sm float-end"> + Add-User</a>
                 </div>
                 @include('flash_data')
                 <div class="card-body">

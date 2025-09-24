@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\country;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Events\WelcomeMail;
+
 
 class AdminController extends Controller
 {
@@ -83,6 +86,42 @@ class AdminController extends Controller
             return redirect()->route('userList')->with('success', 'Users has been New Profile Picture update Successfully.');
         } else {
             return redirect()->route('userList')->with('danger', 'Something went.');
+        }
+    }
+
+    // Admin side User Registration Method
+    public function registerUserProfile(Request $request)
+    {
+        $countries = country::all();
+        return view('admin.user_register', compact('countries'));
+    }
+
+    public function registerUserProfileData(Request $request)
+    {
+        $request->validate([
+            'firstName' => 'required|min:4|max:20|string',
+            'lastName' => 'required|min:4|max:10|string|different:firstName',
+            'email' => 'required|email|unique:User,email',
+            'password' => 'required|min:6',
+            'contact' => 'numeric|nullable',
+            'gender' => 'required|in:Male,Female',
+            'role_id' => 'required|in:0,1',
+            'address' => 'nullable|string|max:100',
+            'country' => 'required|exists:countries,id',
+            'profile' => 'required|mimes:jpg,jpeg,png'
+        ]);
+        $requestData = $request->except(['_token', 'regist']);
+        $imgName = $request->firstName . '_' . rand(1111, 9999) . '.' . $request->profile->extension();
+        $request->profile->move(public_path('profiles/'), $imgName);
+        $requestData['profile'] = $imgName;
+        $requestData['password'] = hash::make($request->password);
+        $user = User::create($requestData);
+        WelcomeMail::dispatch($user);
+        if (!empty($user)) {
+            $user->update($requestData);
+            return redirect()->route('userList', [], 301)->with('success', 'Users Profile has been Register Successfully.');
+        } else {
+            return redirect()->route('userList', [], 301)->with('danger', 'Something went.');
         }
     }
 }
