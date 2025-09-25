@@ -77,7 +77,7 @@ class AuthenticationController extends Controller
             // print_r($user);
             // exit;
         } else {
-            return redirect()->route('login', [], 301)->withSuccess('Please try again');
+            return redirect()->route('login', [], 301)->withDanger('Please try again');
         }
     }
     public function forgotPassword(Request $request)
