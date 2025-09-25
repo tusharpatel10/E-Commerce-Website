@@ -6,10 +6,11 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('admin_home') }}">Dashboard</a></li>
                 <li class="breadcrumb-item" active><a href="{{ route('userList') }}">User-List</a></li>
+                <li class="breadcrumb-item" active>User</li>
             </ol>
             <div class="card mb-4">
                 <div class="card-header">
-                    <i class="fas fa-table me-1"></i>Register User
+                    <i class="fas fa-table me-1"></i><b>Register User</b>
                     <a href="{{ route('userList') }}" class="btn btn-outline-primary sm float-end">Back</a>
                 </div>
                 @include('flash_data')
