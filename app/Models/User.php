@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\enum\roles;
+use App\enum\User_Status;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -32,7 +33,8 @@ class User extends Authenticatable
         'gender',
         'address',
         'country',
-        'profile'
+        'profile',
+        'is_active'
     ];
 
     /**
@@ -55,7 +57,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'role_id' => roles::class
+            'role_id' => roles::class,
+            'is_active' => User_Status::class
         ];
     }
 
@@ -70,6 +73,6 @@ class User extends Authenticatable
 
     public function countryData()
     {
-        return $this->hasOne(country::class, 'id','country');
+        return $this->hasOne(country::class, 'id', 'country');
     }
 }

@@ -39,5 +39,6 @@ Route::group(['prefix' => '/admin', 'middleware' => ['CheckRoles']], function ()
         Route::post('user-profile-update/{id}/', 'updateUserProfile')->name('admin-user-profile-update');
         Route::get('user-profile-register', 'registerUserProfile')->name('admin-user-profile-register');
         Route::post('user-profile-register-data', 'registerUserProfileData')->name('admin-user-profile-register-data');
+        Route::get('change-status-user-status/{id}/{status}', 'changeUserStatus')->name('admin-change-user-status');
     });
 });

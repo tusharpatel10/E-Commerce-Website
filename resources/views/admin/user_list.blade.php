@@ -9,7 +9,8 @@
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-table me-1"></i>
-                    <a href="{{ route('admin-user-profile-register') }}" class="btn btn-outline-primary sm float-end"> + Add-User</a>
+                    <a href="{{ route('admin-user-profile-register') }}" class="btn btn-outline-primary sm float-end"> +
+                        Add-User</a>
                 </div>
                 @include('flash_data')
                 <div class="card-body">
@@ -42,7 +43,8 @@
                                         <td>
                                             <a href="{{ route('admin-user-edit', ['id' => $user->id]) }}"
                                                 class="btn btn-sm btn-primary">Edit</a>
-                                            <a href="#" class="btn btn-sm btn-danger">Deactivate</a>
+                                            <a href="{{ route('admin-change-user-status', ['id' => $user->id, 'status' => $user->is_active == \App\enum\User_Status::user_active ? 0 : 1]) }}"
+                                                class="btn btn-sm my-2 btn-{{ $user->is_active == \App\enum\User_Status::user_active ? 'danger' : 'success' }}">{{ $user->is_active == \App\enum\User_Status::user_active ? 'Deactivate' : 'Activate' }}</a>
                                         </td>
                                     </tr>
                                 @endforeach

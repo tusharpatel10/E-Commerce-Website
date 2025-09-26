@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\enum\User_Status;
 use App\Models\country;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Events\WelcomeMail;
-
+use Illuminate\Queue\Jobs\RedisJob;
 
 class AdminController extends Controller
 {
@@ -122,6 +123,18 @@ class AdminController extends Controller
             return redirect()->route('userList', [], 301)->with('success', 'Users Profile has been Register Successfully.');
         } else {
             return redirect()->route('userList', [], 301)->with('danger', 'Something went.');
+        }
+    }
+
+    public function changeUserStatus(Request $request, $id, $status = 1)
+    {
+        $user = User::find($id);
+        if (!empty($user)) {
+            $user->is_active = $status;
+            $user->save();
+            return redirect()->route('userList')->with('success', "User status updated successfully");
+        } else {
+            return redirect()->route('userList')->with('danger', "Somethin went wrong");
         }
     }
 }
