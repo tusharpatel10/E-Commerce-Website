@@ -13,7 +13,8 @@ class BrandsController extends Controller
      */
     public function index()
     {
-        return view('admin.brand_list');
+        $brands = brands::all();
+        return view('admin.brand_list', compact('brands'));
     }
 
     /**

@@ -14,33 +14,29 @@
                 </div>
                 @include('flash_data')
                 <div class="card-body">
-                    <div class="table-responsive justify-center">
-                        <table class="table table-primary text-start" id="datatablesSimple">
+                    <div class="table-responsive">
+                        <table class="table table-primary text-center" id="datatablesSimple">
                             <thead>
                                 <tr>
-                                    <th scope="col">Sr.</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Image</th>
-                                    <th scope="col">Status</th>
+                                    <th class="text-center">Sr.</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Description</th>
+                                    <th class="text-center">Image</th>
+                                    <th class="text-center">Status</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($users as $user)
-                                    <tr>
+                                @foreach ($brands as $brand)
+                                    <tr class="text-center">
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->desciription }}</td>
-                                        <td>{{ $user->image }}</td>
-                                        <td>
-                                            <a href="{{ route('admin-user-edit', ['id' => $user->id]) }}"
-                                                class="btn btn-sm btn-primary">Edit</a>
-                                            <a href="{{ route('admin-change-user-status', ['id' => $user->id, 'status' => $user->is_active == \App\enum\User_Status::user_active ? 0 : 1]) }}"
-                                                class="btn btn-sm my-2 btn-{{ $user->is_active == \App\enum\User_Status::user_active ? 'danger' : 'success' }}">{{ $user->is_active == \App\enum\User_Status::user_active ? 'Deactivate' : 'Activate' }}</a>
-                                        </td>
+                                        <td>{{ $brand->name }}</td>
+                                        <td>{{ $brand->description }}</td>
+                                        <td><img src="{{ url('brands') . '/' . $brand->image }}"
+                                                alt="{{ $brand->name ?? 'brand' }} Image" width="100"></td>
+
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
