@@ -60,17 +60,24 @@ class BrandsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(brands $brands)
+    public function edit(brands $brand)
     {
-        //
+        return view('admin.brand_edit', compact('brand'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, brands $brands)
+    public function update(Request $request, brands $brand)
     {
-        //
+        $request->validate([
+            'name' => 'required|min:2|max:30|string',
+            'description' => 'nullable|string'
+        ]);
+        $brand->name = $request->name ?? $brand->name;
+        $brand->description = $request->description ?? $brand->description;
+        $brand->save();
+        return redirect()->route('brand.index')->with('success', 'Updated successfully');
     }
 
     /**
@@ -79,5 +86,35 @@ class BrandsController extends Controller
     public function destroy(brands $brands)
     {
         //
+    }
+
+    public function changeBrandImage(Request $request, $id)
+    {
+        $request->validate([
+            'image' => 'required|mimes:png,jpg,jpeg,gif'
+        ]);
+        $requestData = $request->except(['_token', '_method', 'updateProfile']);
+        $brand = brands::find($id);
+        if (!empty($brand)) {
+            $imgName = $brand->name . '_'  . $request->image->extension();
+            $request->image->move(public_path('brands/'), $imgName);
+            $requestData['image'] = $imgName;
+            $brand->update($requestData);
+            return redirect()->route('brand.index')->with('success', 'Brand has been New Picture update Successfully.');
+        } else {
+            return redirect()->route('brand.index')->with('danger', 'Something went.');
+        }
+    }
+
+    public function changeBrandStatus(Request $request, $id, $status = 1)
+    {
+        $brands = brands::find($id);
+        if (!empty($brands)) {
+            $brands->is_active = $status;
+            $brands->save();
+            return redirect()->route('brand.index')->with('success', 'Brand status has been change successfully');
+        } else {
+            return redirect()->route('brand.index')->with('danger', 'Something went wrong');
+        }
     }
 }

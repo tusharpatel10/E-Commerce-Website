@@ -44,4 +44,8 @@ Route::group(['prefix' => '/admin', 'middleware' => ['CheckRoles']], function ()
     });
 
     Route::resource('brand', BrandsController::class);
+    Route::controller(BrandsController::class)->group(function () {
+        Route::post('change-brand-image/{id}', 'changeBrandImage')->name('admin-brand-image-change');
+        Route::get('change-brand-status/{id}/{status?}', 'changeBrandStatus')->name('admin-change-brand-status');
+    });
 });
