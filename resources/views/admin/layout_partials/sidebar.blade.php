@@ -14,7 +14,7 @@
                     <div class="sb-nav-link-icon"><i class="fa fa-users" aria-hidden="true"></i></div>
                     Users
                 </a>
-                <a class="nav-link" href="brands.html">
+                <a class="nav-link" href="{{ route('brand.index') }}">
                     <div class="sb-nav-link-icon"><i class="fa fa-list" aria-hidden="true"></i></div>
                     Brands
                 </a>

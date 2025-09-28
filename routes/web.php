@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\BrandsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,4 +42,6 @@ Route::group(['prefix' => '/admin', 'middleware' => ['CheckRoles']], function ()
         Route::post('user-profile-register-data', 'registerUserProfileData')->name('admin-user-profile-register-data');
         Route::get('change-status-user-status/{id}/{status}', 'changeUserStatus')->name('admin-change-user-status');
     });
+
+    Route::resource('brand', BrandsController::class);
 });
