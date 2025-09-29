@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\BrandsController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -48,4 +49,6 @@ Route::group(['prefix' => '/admin', 'middleware' => ['CheckRoles']], function ()
         Route::post('change-brand-image/{id}', 'changeBrandImage')->name('admin-brand-image-change');
         Route::get('change-brand-status/{id}/{status?}', 'changeBrandStatus')->name('admin-change-brand-status');
     });
+
+    Route::resource('product', ProductsController::class);
 });
