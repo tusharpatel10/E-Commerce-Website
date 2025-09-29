@@ -92,6 +92,9 @@
                                             <label for="function" class="form-label">Function</label>
                                             <select name="function" id="function" class="form-select border-dark">
                                                 <option selected disabled>Select</option>
+                                                @foreach (Config::get('watch_function') as $value)
+                                                    <option value="{{ $value }}">{{ $value }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="col">
