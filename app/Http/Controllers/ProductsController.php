@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\brands;
 use App\Models\products;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.products_list');
     }
 
     /**
@@ -20,16 +21,14 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        //
+        $brands = brands::all();
+        return view('admin.product_add', compact('brands'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function store(Request $request) {}
 
     /**
      * Display the specified resource.

@@ -18,7 +18,7 @@
                     <div class="sb-nav-link-icon"><i class="fa fa-list" aria-hidden="true"></i></div>
                     Brands
                 </a>
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{ route('product.index') }}">
                     <div class="sb-nav-link-icon"><i class="fa fa-archive" aria-hidden="true"></i></div>
                     Products
                 </a>
