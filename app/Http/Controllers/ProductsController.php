@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\brands;
 use App\Models\products;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductsController extends Controller
 {
@@ -28,7 +29,29 @@ class ProductsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {}
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|min:2|max:10|string',
+            'price' => 'required|numeric',
+            'sale_price' => 'nullable|numeric',
+            'color' => 'required|string',
+            'brand_id' => 'required|exists:brands,id',
+            'product_code' => 'required|min:3',
+            'gender' => 'required|in:Male,Female,Children,Unisex',
+            'function' => 'nullable|string|max:50',
+            'stock' => 'required|numeric',
+            'description' => 'required|string|max:500',
+            'image' => 'required|mimes:jpg,jpeg,png,gif'
+        ]);
+
+        $requestData = $request->except(['_token', 'add']);
+        $imgName = Str::snake($request->name) . '_' . $request->image->extension();
+        $request->image->move(public_path('products/'), $imgName);
+        $requestData['image'] = $imgName;
+        $product = products::create($requestData);
+        return redirect()->route('product.index', [], 301)->with('success', 'Product has been Added Successfully!');
+    }
 
     /**
      * Display the specified resource.

@@ -28,7 +28,7 @@
                                 <hr class="border-dark mx-5">
                             @endif
 
-                            <form action="" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('product.store') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="container-fluid">
                                     <div class="row mt-3">
@@ -51,13 +51,16 @@
                                             <label for="color" class="col-form-label">Color</label>
                                             <select name="color" id="color" class="form-select border-dark">
                                                 <Option selected disabled>Selected</Option>
+                                                @foreach (Config::get('color_function') as $value)
+                                                    <option value="{{ $value }}">{{ $value }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
                                     <div class="my-3 row">
                                         <div class="col">
                                             <label for="brand" class="form-label">Brand</label>
-                                            <select class="form-select border-dark" name="brand" id="brand">
+                                            <select class="form-select border-dark" name="brand_id" id="brand_id">
                                                 <option selected disabled>Select</option>
                                                 @foreach ($brands as $brand)
                                                     <option value="{{ $brand->id }}">{{ $brand->name }}</option>
@@ -66,8 +69,8 @@
                                         </div>
                                         <div class="col">
                                             <label for="prod_code" class=" col-form-label">Product Code</label>
-                                            <input type="text" class="form-control border-dark " name="prod_code"
-                                                id="prod_code" />
+                                            <input type="text" class="form-control border-dark " name="product_code"
+                                                id="product_code" />
                                         </div>
                                         <div class="col">
                                             <label for="gender" class="col-form-label"><b>Gender :</b></label>
