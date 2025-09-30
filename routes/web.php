@@ -51,4 +51,8 @@ Route::group(['prefix' => '/admin', 'middleware' => ['CheckRoles']], function ()
     });
 
     Route::resource('product', ProductsController::class);
+    Route::controller(ProductsController::class)->group(function () {
+        Route::post('change-product-image/{id}', 'changeProductImage')->name('admin-product-image-change');
+        Route::get('change-product-status/{id}/{status?}', 'changeProductStatus')->name('admin-change-product-status');
+    });
 });

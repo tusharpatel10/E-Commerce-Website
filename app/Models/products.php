@@ -27,4 +27,9 @@ class products extends Model
         'image',
         'is_active',
     ];
+
+    public function getBrandData()
+    {
+        return $this->hasOne(brands::class, 'id', 'brand_id');
+    }
 }

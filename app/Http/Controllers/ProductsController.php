@@ -14,7 +14,9 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        return view('admin.products_list');
+        $products = products::all();
+        $brands = brands::all();
+        return view('admin.products_list', compact('products', 'brands'));
     }
 
     /**
@@ -83,5 +85,35 @@ class ProductsController extends Controller
     public function destroy(products $products)
     {
         //
+    }
+
+    public function changeProductImage(Request $request, $id)
+    {
+        $request->validate([
+            'image' => 'required|mimes:png,jpg,jpeg,gif'
+        ]);
+        $requestData = $request->except(['_token', '_method', 'updateProfile']);
+        $products = products::find($id);
+        if (!empty($products)) {
+            $imgName = $products->name . '_'  . $request->image->extension();
+            $request->image->move(public_path('brands/'), $imgName);
+            $requestData['image'] = $imgName;
+            $products->update($requestData);
+            return redirect()->route('product.index')->with('success', 'Products has been New Picture update Successfully.');
+        } else {
+            return redirect()->route('product.index')->with('danger', 'Something went.');
+        }
+    }
+
+    public function changeProductStatus(Request $request, $id, $status = 1)
+    {
+        $products = products::find($id);
+        if (!empty($products)) {
+            $products->is_active = $status;
+            $products->save();
+            return redirect()->route('product.index')->with('success', 'Product status has been change successfully');
+        } else {
+            return redirect()->route('product.index')->with('danger', 'Something went wrong');
+        }
     }
 }

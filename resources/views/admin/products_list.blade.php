@@ -18,9 +18,40 @@
                         <table class="table table-primary text-center" id="datatablesSimple">
                             <thead>
                                 <tr>
+                                    <th>Sr.</th>
+                                    <th>Product name</th>
+                                    <th>Price</th>
+                                    <th>Sale Price</th>
+                                    <th>Color</th>
+                                    <th>Brand</th>
+                                    <th>Gender</th>
+                                    <th>Function</th>
+                                    <th>Stock</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($products as $product)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ Str::title($product->name) }}</td>
+                                        <td>{{ $product->price }}</td>
+                                        <td>{{ $product->sale_price }}</td>
+                                        <td>{{ $product->color }}</td>
+                                        <td>{{ $product->getBrandData->name }}</td>
+                                        <td>{{ $product->gender }}</td>
+                                        <td>{{ $product->function }}</td>
+                                        <td>{{ $product->stock }}</td>
+                                        <td>{{ $product->description }}</td>
+                                        <td>
+                                            <a href="{{ route('product.edit', ['product' => $product->id]) }}"
+                                                class="btn btn-sm btn-primary">Edit</a>
+                                            <a href="{{ route('admin-change-product-status', ['id' => $product->id, 'status' => $product->is_active == 1 ? 0 : 1]) }}"
+                                                class="btn btn-sm my-2 btn-{{ $product->is_active == 1 ? 'danger' : 'success' }}">{{ $product->is_active == 1 ? 'Deactivate' : 'Activate' }}</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
