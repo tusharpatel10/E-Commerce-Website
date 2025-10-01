@@ -28,7 +28,6 @@
                                     <th>Function</th>
                                     <th>Stock</th>
                                     <th>Description</th>
-                                    <th>Image</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
