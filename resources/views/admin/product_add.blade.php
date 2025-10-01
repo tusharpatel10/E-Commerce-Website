@@ -5,7 +5,7 @@
             <h1 class="mt-2">Brands</h1>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('admin_home') }}">Dashboard</a></li>
-                <li class="breadcrumb-item" active><a href="{{ route('product.index') }}">product-List</a></li>
+                <li class="breadcrumb-item" active><a href="{{ route('product.index') }}">Product-List</a></li>
                 <li class="breadcrumb-item" active>Product</li>
             </ol>
             <div class="card mb-4">

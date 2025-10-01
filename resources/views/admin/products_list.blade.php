@@ -2,7 +2,7 @@
 @section('content')
     <main>
         <div class="container-fluid">
-            <h1 class="mt-4">All Brands</h1>
+            <h1 class="mt-4">All Product</h1>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('admin_home') }}">Dashboard</a></li>
             </ol>
@@ -15,7 +15,7 @@
                 @include('flash_data')
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-primary text-center" id="datatablesSimple">
+                        <table class="table table-warning text-center" id="datatablesSimple">
                             <thead>
                                 <tr>
                                     <th>Sr.</th>
@@ -28,6 +28,7 @@
                                     <th>Function</th>
                                     <th>Stock</th>
                                     <th>Description</th>
+                                    <th>Image</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -43,7 +44,13 @@
                                         <td>{{ $product->gender }}</td>
                                         <td>{{ $product->function }}</td>
                                         <td>{{ $product->stock }}</td>
-                                        <td>{{ $product->description }}</td>
+                                        <td class="d-flex flex-column align-items-center">
+                                            {{-- </td>
+                                            <td> --}}
+                                                <img src="{{ url('products') . '/' . $product->image }}"
+                                                alt="{{ $product->name ?? 'product' }} Image" class="d-flex" width="90">
+                                                <small class="fs-6 fst-italic">{{ $product->description }}</small>
+                                        </td>
                                         <td>
                                             <a href="{{ route('product.edit', ['product' => $product->id]) }}"
                                                 class="btn btn-sm btn-primary">Edit</a>

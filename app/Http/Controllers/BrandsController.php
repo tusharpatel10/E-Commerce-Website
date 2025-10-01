@@ -96,7 +96,7 @@ class BrandsController extends Controller
         $requestData = $request->except(['_token', '_method', 'updateProfile']);
         $brand = brands::find($id);
         if (!empty($brand)) {
-            $imgName = $brand->name . '_'  . $request->image->extension();
+            $imgName = $brand->name . '.'  . $request->image->extension();
             $request->image->move(public_path('brands/'), $imgName);
             $requestData['image'] = $imgName;
             $brand->update($requestData);
