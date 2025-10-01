@@ -4,5 +4,6 @@ return [
     'Black',
     'Silver',
     'Blue',
-    'Rose Gold'
+    'Rose Gold',
+    'white'
 ];
