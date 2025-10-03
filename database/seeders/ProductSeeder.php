@@ -30,7 +30,7 @@ class ProductSeeder extends Seeder
                 'function' => $faker->randomElement(Config::get('watch_function')),
                 'stock' => $faker->randomDigit(),
                 'description' => $faker->text($maxNbChars = 200),
-                'image' => $faker->imageUrl($width = 640, $height = 480),
+                'image' => $faker->imageUrl($width = 640, $height = 480, 'products', true, 'product'),
                 'is_active' => $faker->randomElement(['1', '0']),
             ]);
         }
