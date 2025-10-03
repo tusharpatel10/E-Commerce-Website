@@ -18,7 +18,7 @@
                     <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Sale badge-->
-                            @if (empty($product->sale_price) && $product->stock != 0)
+                            @if ($product->sale_price && $product->stock != 0)
                                 <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
                                     Sale
                                 </div>
@@ -29,7 +29,7 @@
                                 </div>
                             @endif
                             <!-- Product image-->
-                            <img class="card-img-top" src="{{ asset('products').'/'.$product->image }}" alt="#img" />
+                            <img class="card-img-top" src="{{ asset('products') . '/' . $product->image }}" alt="#img" />
                             {{-- <img class="card-img-top"
                                 src="{{ url('http://127.0.0.1:8000/products') . '/' . $product->image }}"
                                 alt="#img" /> --}}
@@ -58,8 +58,8 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to
-                                        cart</a></div>
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                                        href="{{ route('product-info', ['product' => $product->name]) }}">View Product</a></div>
                             </div>
                         </div>
                     </div>

@@ -13,6 +13,13 @@ class HomeController extends Controller
         $startDate = Carbon::now()->firstOfMonth();
         $endDate = Carbon::now()->lastOfMonth();
         $products = products::whereBetween('created_at', [$startDate, $endDate])->inRandomOrder()->limit(12)->get();
-        return view('index',compact('products'));
+        return view('index', compact('products'));
+    }
+
+    public function productInfo(Request $request, products $product)
+    {
+        echo "<pre>";
+        print_r($product);
+        exit;
     }
 }
