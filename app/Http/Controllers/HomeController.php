@@ -18,8 +18,7 @@ class HomeController extends Controller
 
     public function productInfo(Request $request, products $product)
     {
-        echo "<pre>";
-        print_r($product);
-        exit;
+        $relatedProducts = products::where('gender', $product->gender)->where('function', $product->function)->inRandomOrder()->limit(4)->get();
+        return view('product_info', compact('product', 'relatedProducts'));
     }
 }

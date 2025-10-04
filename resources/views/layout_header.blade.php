@@ -1,7 +1,7 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container-fluid px-4 px-lg-5">
-        <a class="navbar-brand" href="#">E-Commerce</a>
+        <a class="navbar-brand" href="{{ route('mainHome') }}">E-Commerce</a>
         <ul class="navbar-nav">
             <li>
                 <form class="d-flex">
