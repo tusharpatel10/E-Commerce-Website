@@ -70,7 +70,7 @@ class AuthenticationController extends Controller
             if (auth()->user()->role_id == roles::admin) {
                 return redirect()->route('admin_home', [], 301)->withSuccess('Hello Admin, you are Login Successfull');
             } else {
-                return redirect()->route('home', [], 301)->withSuccess('Hello User, you are Login Successfull');
+                return redirect()->route('mainHome', [], 301)->withSuccess('Hello User, you are Login Successfull');
             }
             // $user = Auth()->User();
             // echo "<pre>";
