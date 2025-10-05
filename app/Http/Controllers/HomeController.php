@@ -21,4 +21,9 @@ class HomeController extends Controller
         $relatedProducts = products::where('gender', $product->gender)->where('function', $product->function)->inRandomOrder()->limit(4)->get();
         return view('product_info', compact('product', 'relatedProducts'));
     }
+
+    public function productList(Request $request)
+    {
+        return view('product-list');
+    }
 }

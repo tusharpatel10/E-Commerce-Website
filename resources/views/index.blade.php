@@ -29,7 +29,8 @@
                                 </div>
                             @endif
                             <!-- Product image-->
-                            <img class="card-img-top" src="{{ asset('products') . '/' . $product->image }}" alt="#img" />
+                            <img class="card-img-top" src="{{ asset('products') . '/' . $product->image }}"
+                                alt="#img" />
                             {{-- <img class="card-img-top"
                                 src="{{ url('http://127.0.0.1:8000/products') . '/' . $product->image }}"
                                 alt="#img" /> --}}
@@ -59,11 +60,15 @@
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                        href="{{ route('product-info', ['product' => $product->name]) }}">View Product</a></div>
+                                        href="{{ route('product-info', ['product' => $product->name]) }}">View Product</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 @endforeach
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <a href="{{ route('product-list') }}" class="btn btn-outline-dark">View All</a>
+                </div>
             </div>
         </div>
     </section>

@@ -15,6 +15,7 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <!-- Font Awesome CDN-->
     <script src="{{ asset('js/font-awesome.js') }}"></script>
+    @yield('css')
 
 </head>
 
