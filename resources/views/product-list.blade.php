@@ -6,7 +6,8 @@
             <div class="card box" style="width: 75rem;">
                 <h5 class="card-header">FILTER BY</h5>
                 <div class="card-body">
-                    <form name="search_by_detail" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('product-list') }}" name="search_by_detail" method="get"
+                        enctype="multipart/form-data">
                         <div class="form-row">
                             <div class="form-group col-md m-1">
                                 <label><b>Gender:</b></label>
@@ -33,41 +34,28 @@
                                 <label><b>Color:</b></label>
                                 <select class="form-select" name="color" id="color" aria-label="color filter">
                                     <option selected disabled>Select</option>
-                                    <option value="gold">Gold</option>
-                                    <option value="rose_gold">Rose Gold</option>
-                                    <option value="silver">Silver</option>
-                                    <option value="black">Black</option>
-                                    <option value="beige">Beige</option>
-                                    <option value="blue">Blue</option>
-                                    <option value="green">Green</option>
+                                    @foreach (Config::get('color_function') as $value)
+                                        <option value="{{ $value }}">{{ $value }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-md m-1">
                                 <label><b>Function:</b></label>
                                 <select class="form-select" name="function" id="function" aria-label="function filter">
                                     <option selected disabled>Select</option>
-                                    <option value="analog">Analog</option>
-                                    <option value="automatic">Automatic</option>
-                                    <option value="mechanical">Mechanical</option>
-                                    <option value="smart">Smart</option>
-                                    <option value="digital">Digital</option>
+                                    @foreach (Config::get('watch_function') as $value)
+                                        <option value="{{ $value }}">{{ $value }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-md m-1">
                                 <label><b>Brand:</b></label>
                                 <select class="form-select" name="brand" id="brand" aria-label="brand filter">
                                     <option selected disabled>Select</option>
-                                    <option value="tag_heuer">Tag Heuer</option>
-                                    <option value="casio">Casio</option>
-                                    <option value="fossil">Fossil</option>
-                                    <option value="titan">Titan</option>
-                                    <option value="rolex">Rolex</option>
-                                    <option value="apple">Apple</option>
-                                    <option value="cartier">Cartier</option>
-                                    <option value="omega">Omega</option>
-                                    <option value="diesel">Diesel</option>
-                                    <option value="roadster">Roadster</option>
-                                    <option value="daniel_wellington">Daniel Wellington</option>
+                                    @foreach ($brands as $key => $value)
+                                        <option value="{{ $key }}">
+                                            {{ Str::of($value)->replace('-', ' ')->title()->value() }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-md m-1">
@@ -97,27 +85,29 @@
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                {{-- @foreach ($products as $product)
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Sale badge-->
-                    @if ($product->sale_price && $product->stock != 0)
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
-                        Sale
-                    </div>
-                    @elseif ($product->stock == 0)
-                    <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
-                        Out of Stock
-                    </div>
-                    @endif
-                    <!-- Product image-->
-                    <img class="card-img-top" src="{{ asset('products') . '/' . $product->image }}" alt="#img" />
-                    {{-- <img class="card-img-top"
+                @foreach ($products as $product)
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Sale badge-->
+                            @if ($product->sale_price && $product->stock != 0)
+                                <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
+                                    Sale
+                                </div>
+                            @elseif ($product->stock == 0)
+                                <div class="badge bg-danger text-white position-absolute"
+                                    style="top: 0.5rem; right: 0.5rem">
+                                    Out of Stock
+                                </div>
+                            @endif
+                            <!-- Product image-->
+                            <img class="card-img-top" src="{{ asset('products') . '/' . $product->image }}"
+                                alt="#img" />
+                            {{-- <img class="card-img-top"
                                 src="{{ url('http://127.0.0.1:8000/products') . '/' . $product->image }}"
                                 alt="#img" /> --}}
-                <!-- Product details-->
-                {{-- <div class="card-body p-4">
-                                    <div class="text-center">
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
                                     <!-- Product name-->
                                     <h5 class="fw-bolder">{{ $product->name }}</h5>
                                     <!-- Product reviews-->
@@ -130,26 +120,24 @@
                                     </div>
                                     <!-- Product price-->
                                     @if (empty($product->sale_price) == 0)
-                                    <span
-                                    class="text-muted text-decoration-line-through">{{ '$' . $product->price }}</span>
-                                    {{ '$' . $product->sale_price }}
+                                        <span
+                                            class="text-muted text-decoration-line-through">{{ '$' . $product->price }}</span>
+                                        {{ '$' . $product->sale_price }}
                                     @else
-                                    {{ '$' . $product->price }}
+                                        {{ '$' . $product->price }}
                                     @endif
                                 </div>
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                    href="{{ route('product-info', ['product' => $product->name]) }}">View Product</a>
+                                        href="{{ route('product-info', ['product' => $product->name]) }}">View Product</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    @endforeach --}}
-                <div class="d-grid gap-2 col-6 mx-auto">
-                    <a href="{{ route('product-list') }}" class="btn btn-outline-dark">View All</a>
-                </div>
+                @endforeach
+               {{ $products->links() }}
             </div>
         </div>
     </section>

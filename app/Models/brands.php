@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class brands extends Model
 {
@@ -19,4 +20,9 @@ class brands extends Model
         'image',
         'is_active',
     ];
+
+    public function getBrandNameAttribute()
+    {
+        return Str::of($this->name)->replace('-', ' ')->title()->value();
+    }
 }
